@@ -1,8 +1,4 @@
-import "dotenv/config"
-
-const jwtConfig = ({
-  secret: process.env.JWT_SECRET,
+export const jwtConfig = ({
+  secret: "supersecret",
   expiresIn: "1d"
 })
-
-export default jwtConfig

@@ -6,7 +6,9 @@ async function createUserService({ name, email, password }) {
 
   const userExists = await findUserByEmail(email)
 
-  if (userExists) throw new Error("Usuário já existe")
+  if (userExists) {
+    return res.json("Email já cadastrado")
+  }
 
   const passwordHash = await bcrypt.hash(password, 10)
 
@@ -16,7 +18,6 @@ async function createUserService({ name, email, password }) {
     email,
     password: passwordHash
   })
-
 }
 
 export { createUserService }

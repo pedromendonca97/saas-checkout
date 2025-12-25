@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { findUserByEmail } from "../users/user.repository.js"
-import jwtConfig from "../../config/jwt.js"
+import { jwtConfig } from "../../config/jwt.js"
 
 async function loginUser({ email, password }) {
 
@@ -13,7 +13,7 @@ async function loginUser({ email, password }) {
 
   const token = jwt.sign(
     { userId: user.id },
-    jwtConfig,
+    jwtConfig.secret,
     { expiresIn: jwtConfig.expiresIn }
   )
 

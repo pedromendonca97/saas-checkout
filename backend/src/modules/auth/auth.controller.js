@@ -1,4 +1,4 @@
-import { loginUser } from "./auth.services"
+import { loginUser } from "./auth.services.js"
 
 async function loginUserController(req, res) {
 

@@ -6,8 +6,11 @@ async function createUserController(req, res) {
 
     await createUserService(req.body)
     
-    return res.status(201).json({ message: "Usuário criado com sucesso" })
+    return res.status(201).json({ message: "Usuário criado com sucesso!" })
   } catch (err) {
-    return res.status(400).json({ message: "Erro ao criar usuário", err })
+    return res.status(400).json({ message: "Não foi possível criar usuário", err })
   }
 }
+
+export { createUserController }
+

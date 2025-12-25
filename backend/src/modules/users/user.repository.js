@@ -5,7 +5,6 @@ async function createUser(newUser) {
   const { id, name, email, password } = newUser
 
   await db.query(`INSERT INTO users (id, name, email, password) VALUES (?, ?, ?, ?)`, [id, name, email, password])
-
 }
 
 async function findUserByEmail(email) {

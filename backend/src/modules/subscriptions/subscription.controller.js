@@ -23,7 +23,10 @@ async function getMySubscriptionController(req, res) {
 
   const subscription = await getMySubscription(userId)
   if (!subscription) {
-    return res.json({ subscription: null })
+    return res.json({
+      success: true,
+      data: subscription || null
+    })
   }
 
   return res.json(subscription)

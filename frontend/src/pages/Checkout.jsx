@@ -14,12 +14,9 @@ export default function Checkout() {
           api.get("/subscriptions/me")
         ])
 
-        setPlans(plansResponse.data.data || [])
-        setSubscription(subscriptionResponse.data.data || null)
-        console.log("SUB STATE:", subscriptionResponse.data.data)
+        setPlans(plansResponse.data || [])
+        setSubscription(subscriptionResponse.data || null)
 
-        console.log("PLANS RAW:", plansResponse.data)
-        console.log("SUBSCRIPTION RAW:", subscriptionResponse.data)
       } catch (err) {
         console.error("Erro ao carregar checkout", err)
         setPlans([])
@@ -31,6 +28,7 @@ export default function Checkout() {
 
     loadData()
   }, [])
+
 
   const canChoosePlan = !subscription || subscription.status === "inactive"
 

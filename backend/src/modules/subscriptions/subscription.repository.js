@@ -39,9 +39,14 @@ async function findSubscriptionWithPlanByUser(userId) {
   return rows[0]
 }
 
+async function cancelSubscription(id) {
+  await db.query(`UPDATE subscriptions SET status = "inactive" WHERE id = ?`, [id])
+}
+
 export {
   findActiveSubscriptionByUser,
   createSubscription,
   deactivateSubscription,
-  findSubscriptionWithPlanByUser
+  findSubscriptionWithPlanByUser,
+  cancelSubscription
 }

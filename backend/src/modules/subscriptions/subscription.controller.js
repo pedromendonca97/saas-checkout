@@ -1,4 +1,4 @@
-import { subscribeUser, getMySubscription } from "../subscriptions/subscription.services.js"
+import { subscribeUser, getMySubscription, cancelSubscriptionService } from "../subscriptions/subscription.services.js"
 
 async function subscribeUserController(req, res) {
 
@@ -28,4 +28,19 @@ async function getMySubscriptionController(req, res) {
   return res.json(subscription)
 }
 
-export { subscribeUserController, getMySubscriptionController }
+async function cancelSubscriptionController(req, res) {
+
+  try {
+    
+    const userId = req.userId
+
+    await cancelSubscriptionService(userId)
+    
+    return res.json({ message: "Assinatura cancelada com sucesso!" })
+  } catch (err) {
+    return res.status(400).json({ error: err.message })
+  }
+
+}
+
+export { subscribeUserController, getMySubscriptionController, cancelSubscriptionController }

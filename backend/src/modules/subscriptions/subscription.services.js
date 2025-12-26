@@ -3,7 +3,8 @@ import {
   findActiveSubscriptionByUser,
   createSubscription,
   deactivateSubscription,
-  findSubscriptionWithPlanByUser
+  findSubscriptionWithPlanByUser,
+  cancelSubscription
 } from "./subscription.repository.js"
 import { findPlanById } from "../plans/plan.repository.js"
 
@@ -42,4 +43,14 @@ async function getMySubscription(userId) {
   }
 }
 
-export { subscribeUser, getMySubscription }
+async function cancelSubscriptionService(userId) {
+
+  const activeSubscription = await findActiveSubscriptionByUser(userId)
+  if (!activeSubscription) {
+    throw new Error("Usuário não possui assinatura ativa")
+  }
+
+  await cancelSubscription(activeSubscription.id)
+}
+
+export { subscribeUser, getMySubscription, cancelSubscriptionService }

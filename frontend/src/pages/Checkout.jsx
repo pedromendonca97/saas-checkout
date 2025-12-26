@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { api } from "../services/api"
 
 export default function Checkout() {
@@ -63,9 +64,20 @@ export default function Checkout() {
     }
   }
 
+  const navigate = useNavigate()
+
+  function handleLogout() {
+    localStorage.removeItem("token")
+    navigate("/")
+  }
+
   return (
     <div>
       <h1>Checkout</h1>
+
+      <button onClick={handleLogout}>
+        Sair
+      </button>
 
       {loading && <p>Carregando...</p>}
 
@@ -100,6 +112,7 @@ export default function Checkout() {
           ))}
         </>
       )}
+      
     </div>
   )
 }

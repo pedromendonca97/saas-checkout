@@ -1,4 +1,5 @@
 import { subscribeUser, getMySubscription, cancelSubscriptionService } from "../subscriptions/subscription.services.js"
+import { success, error } from "../../utils/response.js"
 
 async function subscribeUserController(req, res) {
 
@@ -9,9 +10,9 @@ async function subscribeUserController(req, res) {
 
     await subscribeUser({ userId, planId })
 
-    return res.status(201).json({ message: "Assinatura ativa" })    
+    return success(res, { message: "Assinatura ativa" }, 201) // Helper de resposta   
   } catch (err) {
-    return res.status(400).json({ error: err.message })
+    return error(res, err.message)
   }
 
 }
@@ -36,9 +37,9 @@ async function cancelSubscriptionController(req, res) {
 
     await cancelSubscriptionService(userId)
     
-    return res.json({ message: "Assinatura cancelada com sucesso!" })
+    return success(res, { message: "Assinatura cancelada com sucesso" }, 200)
   } catch (err) {
-    return res.status(400).json({ error: err.message })
+    return error(res, err.message)
   }
 
 }

@@ -1,16 +1,16 @@
 import { createUserService } from "./user.services.js"
+import { success, error } from "../../utils/response.js"
 
 async function createUserController(req, res) {
 
   try {
 
     await createUserService(req.body)
-    
-    return res.status(201).json({ message: "Usuário criado com sucesso!" })
+
+    return success(res, { message: "Usuário criado com sucesso!" }, 201)
   } catch (err) {
-    return res.status(400).json({ message: "Não foi possível criar usuário", err })
+    return error(res, err.message)
   }
 }
 
 export { createUserController }
-

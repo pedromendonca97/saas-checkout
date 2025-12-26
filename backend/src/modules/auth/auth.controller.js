@@ -1,4 +1,5 @@
 import { loginUser } from "./auth.services.js"
+import { error } from "../../utils/response.js"
 
 async function loginUserController(req, res) {
 
@@ -8,7 +9,7 @@ async function loginUserController(req, res) {
 
     return res.json({ token })
   } catch (err) {
-    return res.status(401).json({ error: err.message })
+    return error(res, err.message)
   }
 
 }

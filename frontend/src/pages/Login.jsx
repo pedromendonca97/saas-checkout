@@ -20,7 +20,7 @@ export default function Login() {
 
       const response = await api.post("/login", { email, password })
 
-      const token = response.data.token
+      const token = response.data.data.token
 
       localStorage.setItem("token", token)
 

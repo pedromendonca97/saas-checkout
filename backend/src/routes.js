@@ -3,7 +3,7 @@ import { loginUserController } from "../src/modules/auth/auth.controller.js"
 import { createUserController } from "../src/modules/users/user.controller.js"
 import { authMiddleware } from "./middlewares/auth.middleware.js"
 import { getAllPlansController } from "./modules/plans/plan.controller.js"
-import { subscribeUserController } from "./modules/subscriptions/subscription.controller.js"
+import { subscribeUserController, getMySubscriptionController } from "./modules/subscriptions/subscription.controller.js"
 
 const routes = Router()
 
@@ -12,6 +12,8 @@ routes.post("/users", createUserController) // Create user
 routes.post("/login", loginUserController) // Login
 
 routes.post("/subscriptions", authMiddleware, subscribeUserController) // Subscription
+
+routes.post("/subscriptions/me", authMiddleware, getMySubscriptionController) // Subscription/me
 
 routes.get("/me", authMiddleware, (req, res) => { // Auth 
   return res.json({

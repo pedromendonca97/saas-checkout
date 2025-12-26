@@ -15,9 +15,33 @@ async function createSubscription(data) {
 }
 
 async function deactivateSubscription(id) {
-  
+
   await db.query(`UPDATE subscriptions SET status = "inactive" WHERE id = ?`, [id])
 
 }
 
-export { findActiveSubscriptionByUser, createSubscription, deactivateSubscription }
+async function findSubscriptionWithPlanByUser(userId) {
+  const [rows] = await db.query(`
+    SELECT
+      s.id AS subscription_id,
+      s.status,
+      s.created_at,
+      p.id AS plan_id,
+      p.name AS plan_name,
+      p.price AS plan_price
+    FROM subscriptions s
+    JOIN plans p ON p.id = s.plan_id
+    WHERE s.user_id = ?
+    ORDER BY s.created_at DESC
+    LIMIT 1
+    `, [userId])
+
+  return rows[0]
+}
+
+export {
+  findActiveSubscriptionByUser,
+  createSubscription,
+  deactivateSubscription,
+  findSubscriptionWithPlanByUser
+}

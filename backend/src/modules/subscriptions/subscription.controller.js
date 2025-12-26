@@ -1,4 +1,4 @@
-import { subscribeUser } from "../subscriptions/subscription.services.js"
+import { subscribeUser, getMySubscription } from "../subscriptions/subscription.services.js"
 
 async function subscribeUserController(req, res) {
 
@@ -16,4 +16,16 @@ async function subscribeUserController(req, res) {
 
 }
 
-export { subscribeUserController }
+async function getMySubscriptionController(req, res) {
+
+  const userId = req.userId
+
+  const subscription = await getMySubscription(userId)
+  if (!subscription) {
+    return res.json({ subscription: null })
+  }
+
+  return res.json(subscription)
+}
+
+export { subscribeUserController, getMySubscriptionController }

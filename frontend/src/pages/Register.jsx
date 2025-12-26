@@ -1,49 +1,41 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-
 import { api } from "../services/api"
 
-export default function Login() {
+export default function Register() {
 
   const navigate = useNavigate()
 
+  const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
 
   async function handleSubmit(e) {
-    e.preventDefault() // Não recarrega a página
-
-    console.log("SUBMIT DISPARADO"); // TESTE
+    e.preventDefault()
 
     try {
 
-      const response = await api.post("/login", { email, password })
+      await api.post("/users", { name, email, password })
 
-      const token = response.data.data.token
-
-      console.log("LOGIN OK");
-      console.log(response.data);
-      console.log("TOKEN:", token);
-
-      localStorage.setItem("token", token)
-
-      setError(""); // Limpa erro antigo
-
-      navigate("/dashboard")
+      navigate("/")
     } catch (err) {
-      console.log("ERRO NO LOGIN:", err);
-      console.log("RESPOSTA:", err.response?.data);
-      setError("Email ou senha inválidos");
+      setError("Erro ao criar conta")
     }
   }
 
   return (
 
     <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
+      <h2>Criar conta</h2>
 
       {error && <p>{error}</p>}
+
+      <input
+        placeholder="Nome"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
 
       <input
         type="email"
@@ -59,12 +51,7 @@ export default function Login() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button type="submit">Entrar</button>
-
-      <p>
-        Não tem conta? <a href="/register">Cadastre-se</a>
-      </p>
-
+      <button type="submit">Cadastrar</button>
     </form>
 
   )

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 export default function Dashboard() {
 
   const navigate = useNavigate();
 
   const [subscription, setSubscription] = useState(null);
-  
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -38,7 +39,10 @@ export default function Dashboard() {
       <button onClick={handleLogout}>Sair</button>
 
       {!subscription ? (
-        <p>Você não possui assinatura ativa</p>
+        <>
+          <p>Você não possui assinatura ativa</p>
+          <Link to="/checkout">Assinar um plano</Link>
+        </>
       ) : (
         <>
           <h2>Meu Plano</h2>
@@ -46,6 +50,7 @@ export default function Dashboard() {
           <p>Status: {subscription.status}</p>
         </>
       )}
+
     </div>
 
   );

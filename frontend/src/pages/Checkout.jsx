@@ -2,10 +2,8 @@ import { useEffect, useState } from "react"
 import { api } from "../services/api"
 
 export default function Checkout() {
-
-  const [subscription, setSubscription] = useState(null)
-
   const [plans, setPlans] = useState([])
+  const [subscription, setSubscription] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -14,12 +12,18 @@ export default function Checkout() {
         const [plansResponse, subscriptionResponse] = await Promise.all([
           api.get("/plans"),
           api.get("/subscriptions/me")
-        ]);
+        ])
 
-        setPlans(plansResponse.data.data)
-        setSubscription(subscriptionResponse.data.data)
+        setPlans(plansResponse.data.data || [])
+        setSubscription(subscriptionResponse.data.data || null)
+        console.log("SUB STATE:", subscriptionResponse.data.data)
+
+        console.log("PLANS RAW:", plansResponse.data)
+        console.log("SUBSCRIPTION RAW:", subscriptionResponse.data)
       } catch (err) {
         console.error("Erro ao carregar checkout", err)
+        setPlans([])
+        setSubscription(null)
       } finally {
         setLoading(false)
       }
@@ -28,70 +32,62 @@ export default function Checkout() {
     loadData()
   }, [])
 
-  useEffect(() => {
-    async function loadPlans() {
-      try {
-        const response = await api.get("/plans")
-        setPlans(response.data.data)
-      } catch (err) {
-        console.error("Erro ao carregar planos", err)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadPlans()
-  }, [])
+  const canChoosePlan = !subscription || subscription.status === "inactive"
 
   async function handleSubscribe(planId) {
     try {
-      await api.post("/subscriptions", { planId })
+      const response = await api.post("/subscriptions", { planId })
+
       alert("Plano assinado com sucesso!")
+
+      setSubscription(response.data.data) 
     } catch (err) {
       alert("Erro ao assinar plano")
     }
   }
 
   async function handleCancelSubscription() {
-    const confirmCancel = window.confirm("Tem certeza que deseja cancelar sua assinatura ?")
+    const confirmCancel = window.confirm(
+      "Tem certeza que deseja cancelar sua assinatura?"
+    )
 
-    if (confirmCancel) return
+    if (!confirmCancel) return
 
     try {
-
       await api.patch("/subscriptions/cancel")
       alert("Assinatura cancelada com sucesso")
 
-      // Atualiza estado
-      setSubscription(null)
+      setSubscription((prev) =>
+        prev ? { ...prev, status: "inactive" } : null
+      )
     } catch (err) {
       alert("Erro ao cancelar assinatura")
     }
-
   }
 
   return (
     <div>
-
       <h1>Checkout</h1>
 
-      {/* SE JÁ TEM PLANO */}
-      {subscription && (
-        <div>
+      {loading && <p>Carregando...</p>}
+
+      {!loading && subscription?.status === "active" && (
+        <>
           <h2>Seu plano atual</h2>
           <p>Plano: {subscription.plan.name}</p>
           <p>Status: {subscription.status}</p>
-          <p>Preço: R$ {subscription.plan.price}</p>
-
-          <button onClick={handleCancelSubscription}>
-            Cancelar assinatura
-          </button>
-        </div>
+          <p>Você já possui um plano ativo.</p>
+        </>
       )}
 
-      {/* SE NÃO TEM PLANO, MOSTRA CHECKOUT */}
-      {!subscription && (
+      {!loading && canChoosePlan && (
         <>
+          <h2>
+            {subscription
+              ? "Renovar plano"
+              : "Escolha um plano"}
+          </h2>
+
           {plans.length === 0 && <p>Nenhum plano disponível</p>}
 
           {plans.map((plan) => (
@@ -100,14 +96,12 @@ export default function Checkout() {
               <p>Preço: R$ {plan.price}</p>
 
               <button onClick={() => handleSubscribe(plan.id)}>
-                Assinar
+                {subscription ? "Renovar" : "Assinar"}
               </button>
             </div>
           ))}
         </>
       )}
-
     </div>
-
-  );
+  )
 }

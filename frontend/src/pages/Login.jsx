@@ -22,6 +22,10 @@ export default function Login() {
 
       const token = response.data.data.token
 
+      console.log("LOGIN OK");
+      console.log(response.data);
+      console.log("TOKEN:", token);
+
       localStorage.setItem("token", token)
 
       setError(""); // Limpa erro antigo

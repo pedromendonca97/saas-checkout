@@ -1,5 +1,6 @@
 import { loginUser } from "./auth.services.js"
 import { error } from "../../utils/response.js"
+import { success } from "../../utils/response.js"
 
 async function loginUserController(req, res) {
 
@@ -7,7 +8,7 @@ async function loginUserController(req, res) {
 
     const token = await loginUser(req.body)
 
-    return res.json({ token })
+    return success(res, { token })
   } catch (err) {
     return error(res, err.message)
   }

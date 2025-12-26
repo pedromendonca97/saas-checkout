@@ -52,6 +52,24 @@ export default function Checkout() {
     }
   }
 
+  async function handleCancelSubscription() {
+    const confirmCancel = window.confirm("Tem certeza que deseja cancelar sua assinatura ?")
+
+    if (confirmCancel) return
+
+    try {
+
+      await api.patch("/subscriptions/cancel")
+      alert("Assinatura cancelada com sucesso")
+
+      // Atualiza estado
+      setSubscription(null)
+    } catch (err) {
+      alert("Erro ao cancelar assinatura")
+    }
+
+  }
+
   return (
     <div>
 
@@ -64,6 +82,10 @@ export default function Checkout() {
           <p>Plano: {subscription.plan.name}</p>
           <p>Status: {subscription.status}</p>
           <p>Preço: R$ {subscription.plan.price}</p>
+
+          <button onClick={handleCancelSubscription}>
+            Cancelar assinatura
+          </button>
         </div>
       )}
 

@@ -9,83 +9,83 @@ Projeto desenvolvido com foco em aprendizado prático de backend, frontend e arq
 
   👤 Autenticação
 
-  Cadastro de usuários
+  - Cadastro de usuários
 
-  Login com email e senha
+  - Login com email e senha
 
-  Hash de senha com bcrypt
+  - Hash de senha com bcrypt
 
-  Autenticação via JWT
+  - Autenticação via JWT
 
-  Proteção de rotas autenticadas
+  - Proteção de rotas autenticadas
   
 
 📦 Planos
 
-  Listagem de planos (FREE, PRO, PREMIUM)
+  - Listagem de planos (FREE, PRO, PREMIUM)
 
-  Preços dinâmicos vindos do backend
+  - Preços dinâmicos vindos do backend
 
 💳 Assinaturas
 
-  Criar assinatura
+  - Criar assinatura
 
-  Cancelar assinatura
+  - Cancelar assinatura
 
-  Renovar / reativar assinatura
+  - Renovar / reativar assinatura
 
-  Exibir plano atual do usuário
+  - Exibir plano atual do usuário
 
-  Estados: active | inactive
+  - Estados: active | inactive
   
 
 🖥️ Frontend
 
-  Interface moderna com Tailwind CSS
+  - Interface moderna com Tailwind CSS
 
-  Design escuro inspirado em plataformas SaaS modernas
+  - Design escuro inspirado em plataformas SaaS modernas
 
-  Layout responsivo
+  - Layout responsivo
 
-  Loading animado
+  - Loading animado
 
-  Feedback visual de ações
+  - Feedback visual de ações
 
-  Dashboard do usuário
+  - Dashboard do usuário
 
-  Checkout de planos
+  - Checkout de planos
   
 
 🛠️ Tecnologias Utilizadas
 Backend
 
-  Node.js
+  - Node.js
 
-  Express
+  - Express
 
-  MySQL (HeidiSQL / PlanetScale)
+  - MySQL (HeidiSQL / PlanetScale)
 
-  JWT (jsonwebtoken)
+  - JWT (jsonwebtoken)
 
-  Bcrypt
+  - Bcrypt
 
-  UUID
+  - UUID
 
-  CORS
+  - CORS
 
-  Arquitetura em camadas (routes, controllers, services)
+  - Arquitetura em camadas (routes, controllers, services)
 
-  Frontend
+  - Frontend
 
-  React
+  - React
 
-  React Router DOM
+  - React Router DOM
 
-  Axios
+  - Axios
 
-  Tailwind CSS
+  - Tailwind CSS
 
-  Vite
+  - Vite
 
 
   ▶️ Como rodar o projeto localmente
@@ -103,19 +103,19 @@ Backend
 
 🧪 Testes
 
-Todas as rotas do backend foram testadas com Postman
+- Todas as rotas do backend foram testadas com Postman
 
 
 🎯 Objetivo do Projeto
 
-Este projeto foi desenvolvido com o objetivo de:
+- Este projeto foi desenvolvido com o objetivo de:
 
-Consolidar conhecimentos em Node.js
+- Consolidar conhecimentos em Node.js
 
-Aprender autenticação JWT na prática
+- Aprender autenticação JWT na prática
 
-Entender fluxo real de um SaaS
+- Entender fluxo real de um SaaS
 
-Integrar backend + frontend
+- Integrar backend + frontend
 
-Criar um projeto sólido para portfólio / estágio
+- Criar um projeto sólido para portfólio / estágio
